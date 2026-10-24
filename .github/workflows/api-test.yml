@@ -1,1 +1,36 @@
+name: GoRest API Testing
 
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  api-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Run API Tests
+        env:
+          GOREST_TOKEN: ${{ secrets.GOREST_TOKEN }}
+        run: |
+          if [ -z "$GOREST_TOKEN" ]; then
+            echo "GOREST_TOKEN is missing"
+            exit 1
+          fi
+
+          newman run GoRest_Collection.json \
+            -e GoRest_Environment.json \
+            -d users.csv \
+            --env-var "token=$GOREST_TOKEN" \
+            --reporters cli
