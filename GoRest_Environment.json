@@ -1,0 +1,34 @@
+{
+	"id": "206a0ca6-0cdb-4da1-8291-015af00611b2",
+	"name": "2373401010312_HuynhTanNhat_GoRest_Env",
+	"values": [
+		{
+			"key": "BaseURL",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "userId",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "createdEmail",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"color": null,
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2026-10-24T03:36:21.574Z",
+	"_postman_exported_using": "Postman/12.33.4-261023-0231"
+}
