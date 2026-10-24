@@ -1,0 +1,51 @@
+name: GoRest API Monitoring
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+jobs:
+  monitor-api:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Monitor GET Users API
+        run: |
+          python3 - <<'PY'
+          import urllib.request
+          import time
+          import sys
+
+          url = "https://gorest.co.in/public/v2/users"
+
+          start = time.perf_counter()
+
+          try:
+              with urllib.request.urlopen(
+                  url, timeout=15
+              ) as response:
+                  status = response.status
+                  response.read()
+
+              elapsed_ms = (
+                  time.perf_counter() - start
+              ) * 1000
+
+              print(f"Status: {status}")
+              print(f"Response time: {elapsed_ms:.2f} ms")
+
+              if status != 200:
+                  print("FAIL: HTTP status is not 200")
+                  sys.exit(1)
+
+              if elapsed_ms >= 800:
+                  print("FAIL: Response time >= 800ms")
+                  sys.exit(1)
+
+              print("PASS: API response time < 800ms")
+
+          except Exception as error:
+              print(f"FAIL: {error}")
+              sys.exit(1)
+          PY
